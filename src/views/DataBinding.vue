@@ -5,7 +5,7 @@
     </p>
 
     <p>
-      <!-- innerHTML과 비슷 -->
+      <!-- innerHTML과 비슷 XSS에 취약하여 권장하지 않는다-->
       <span v-html="html"></span>
     </p>
 
@@ -15,12 +15,12 @@
     </p>
 
     <p>
-      <!-- v-pre는 기존 vue 코드가 들지않는다. -->
+      <!-- v-pre는 기존 vue 코드가 들지않는다. (컴파일 X) -->
       <span v-pre>{{ html }}</span>
     </p>
 
     <p>
-      <!-- innerTEXT과 비슷 밑의 setTimeout는 들지 않는다. 한번만 가능-->
+      <!-- innerTEXT과 비슷 밑의 setTimeout는 들지 않는다. 최초 한번만 렌더-->
       <span v-once>{{ once }}</span>
     </p>
     <p>
