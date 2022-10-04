@@ -39,7 +39,7 @@
         <!-- keypress -->
         <div class="keypress">
             <input type="text"  @keypress="EventHandler('keypress', $event)" placeholder="keypress"/>
-            <div class="key_txt">{{ key_txt }} <button @click="DeleteVal">지우기</button></div>
+            <div class="key_txt">{{ key_txt }} <button @click="DeleteVal">지우기 </button></div>
         </div>
   </div>
 </template>
