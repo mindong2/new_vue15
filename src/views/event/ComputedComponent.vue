@@ -3,7 +3,7 @@
     <!-- 보간 내에 표현식을 넣으면 편리하지만 유지보수가 어려워진다.
         '함수'안에서 사용되는 data에 포함된 변수들을 감시하여 변화될때 실행되는 '함수' computed는 함수여야하고 리턴값이 있어야 한다
       -->
-
+      <div>------ computed ------</div>
       <p>
         <span>firstName :</span> <input type="text" v-model="FirstName" placeholder="FirstName"/>
       </p>

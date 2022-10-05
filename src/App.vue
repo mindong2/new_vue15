@@ -16,7 +16,7 @@
     <div class="event_cont" v-else-if="bool === 2" >
       <VonComponent v-on:send="getEvent"/>
       <ComputedComponent v-on:send="getEvent"/>
-      <watchComponent v-on:send="getEvent"/>
+      <watchComponent/>
     </div>
 
   </div>
