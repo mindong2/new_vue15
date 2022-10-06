@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import WhereView from '../views/WhereView.vue'
+import BoardView from '../views/BoardView.vue'
+import DetailView from '../views/DetailView.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +25,17 @@ const routes = [
     path: '/where',
     name: 'where',
     component: WhereView
+  },
+  {
+    path : '/board',
+    name: 'board',
+    component: BoardView
+  },
+  {
+    // 이름이 꼭 id가 아니어도 작동한다.
+    path : '/detail/:id',
+    name : 'detail',
+    component : DetailView
   }
 ]
 

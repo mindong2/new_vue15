@@ -2,7 +2,7 @@
   <div id="app">
     Where View
     <p>
-      <button @click="goToHome">goToHome</button>
+      <button @click="goToBoard">goToBoard</button>
     </p>
   </div>
 </template>
@@ -11,8 +11,8 @@
 export default {
   name : "WhereView",
   methods: {
-    goToHome() {
-      this.$router.push('/');
+    goToBoard() {
+      this.$router.push('/board');
     }
   }
 }
