@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import WhereView from '../views/WhereView.vue'
 import BoardView from '../views/BoardView.vue'
 import DetailView from '../views/DetailView.vue'
+import ParentView from '../components/ParentView.vue'
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,12 @@ const routes = [
     path : '/detail/:id',
     name : 'detail',
     component : DetailView
+  },
+  {
+    path : '/parent',
+    name : 'parent',
+    props: true,
+    component : ParentView
   }
 ]
 
