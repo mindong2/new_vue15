@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <ParentView :propsdata="str"></ParentView>
+    <!-- <ParentView :propsdata="str"></ParentView> -->
     <br/>
     <br/>
     <br/>
@@ -18,15 +18,16 @@
 </template>
 
 <script>
-import ParentView from "./components/ParentView.vue";
+// import ParentView from "./components/ParentView.vue";
   export default {
     name : "app",
     components : {
-    ParentView,
+    // ParentView,
     },
     data(){
       return {
-        str: "parent's propsdata"
+        str: "parent's propsdata",
+        provideStr: 'provide String'
       }
     }
   }
