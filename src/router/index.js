@@ -5,6 +5,7 @@ import WhereView from '../views/WhereView.vue'
 import BoardView from '../views/BoardView.vue'
 import DetailView from '../views/DetailView.vue'
 import ParentView from '../components/ParentView.vue'
+import ProvideView from '../views/props,provide,inject/ProvideView.vue'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,12 @@ const routes = [
     name : 'parent',
     props: true,
     component : ParentView
+  },
+  {
+    path : '/provide',
+    name : 'provide',
+    props: true,
+    component : ProvideView
   }
 ]
 

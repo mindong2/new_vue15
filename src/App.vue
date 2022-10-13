@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <!-- <ParentView :propsdata="str"></ParentView> -->
     <br/>
     <br/>
     <br/>
+    <!-- <ProvideView></ProvideView> -->
+
     --------------- router-view -------------
     <nav>
       <router-link to="/">Home</router-link> | 
       <router-link to="/about">About</router-link> | 
       <router-link to="/where">WhereView</router-link> | 
       <router-link to="/board">BoardView</router-link> |
-      <router-link to="/parent">ParentView</router-link>
+      <router-link to="/parent">ParentView</router-link> |
+      <router-link to="/provide">ProvideView</router-link> 
     </nav>  
     <!-- router-view가 해당 컴포넌트에 해당하는 영역 -->
     <router-view/>
@@ -18,16 +20,33 @@
 </template>
 
 <script>
-// import ParentView from "./components/ParentView.vue";
+// import ProvideView from "./views/props,provide,inject/ProvideView.vue";
   export default {
     name : "app",
     components : {
-    // ParentView,
+      // ProvideView,
     },
     data(){
       return {
         str: "parent's propsdata",
-        provideStr: 'provide String'
+        provideStr: 'provide String',
+        provideObj : {
+          name : '',
+          age : null,
+          email : ''
+        }
+      }
+    },
+    methods: {
+      changeForm(name, value) {
+        this.provideObj[name] = value
+      }
+    },
+    // 하위 컴포넌트들에게 전달할 propsdata
+    provide() {
+      return {
+        form : this.provideObj,
+        changeForm : this.changeForm
       }
     }
   }
