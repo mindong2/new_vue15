@@ -1,7 +1,8 @@
 <template>
   <div id="slot">
     <ModalView>
-        <h1 slot="header">header1 {{ this.fromModal }} </h1>
+        <!-- ModalView에서의 <slot name="header" :fromModal="sendData" 에서 데이터를 받는다.></slot> -->
+        <template v-slot:header="getData">header1 <span style="font-size:24px;">{{ getData.fromModal }}</span> </template>
         <br />
         <br />
         <div slot="content">Content1</div>
@@ -10,7 +11,7 @@
         <!-- 템플릿 자체를 넣을수도있다 -> 이 경우 그냥 div -->
         <template slot="main">
             <div id="app22">
-                adasdad
+                템플릿 자체를 slot 메인으로 가져온 경우
             </div>
         </template>
 
@@ -38,12 +39,6 @@ export default {
     components: {
         ModalView
     },
-    props: {
-        fromModal: {
-            type: String,
-            defalut : ''
-        }
-    }
 }
 </script>
 
