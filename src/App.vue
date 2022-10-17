@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <watchComponent />
-
+    vuex
     <input type="text" v-model="searchKeyword" />
     <br />
     <ul>
