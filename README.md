@@ -1,4 +1,4 @@
-# vue_project / Vuex
+# vue_project / Mixins
 
 ## Project setup
 ```
