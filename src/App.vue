@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-
+    <h1>Main</h1>
+    <nav>
+      <router-link to="/mixin">mixin</router-link> |
+      <router-link to="/mixin2">mixin2</router-link> 
+    </nav>
+    <router-view />
   </div>
 </template>
 
@@ -11,12 +16,9 @@ export default {
   components: {
   },
   data() {
-  },
-  methods: {
-  },
-  provide() {
-  },
-  computed: {
+    return {
+
+    }
   },
 };
 </script>
