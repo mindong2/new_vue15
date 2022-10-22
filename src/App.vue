@@ -1,12 +1,16 @@
 <template>
   <div id="app">
     <h1>리스트 컴포넌트</h1>
-    <ListView :fruits="fruits"></ListView>
+    <ListView
+      :fruits="fruits"
+      :selected="selected"
+      @change="changeSelected"
+    ></ListView>
   </div>
 </template>
 
 <script>
-import ListView from "@/component/ListView.vue";
+import ListView from "@/components/ListView.vue";
 export default {
   name: "app",
   components: {
@@ -20,7 +24,13 @@ export default {
         { name: "grape", key: "포도" },
         { name: "mango", key: "망고" },
       ],
+      selected: "",
     };
+  },
+  methods: {
+    changeSelected(value) {
+      this.selected = value;
+    },
   },
 };
 </script>
