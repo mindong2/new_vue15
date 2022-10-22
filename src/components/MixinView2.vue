@@ -5,16 +5,13 @@
 </template>
 
 <script>
-import mix2 from '@/mixins/mix2.js'
+import mix2 from "@/mixins/mix2.js";
 export default {
-  mixins : [mix2],
+  mixins: [mix2],
   data() {
-    return {}
+    return {};
   },
-  
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
