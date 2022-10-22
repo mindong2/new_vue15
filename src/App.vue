@@ -60,6 +60,7 @@ export default {
   methods: {
     changeForm(name, value) {
       this.provideObj[name] = value;
+      // this.provideObj.name = value;와 같다
     },
   },
   // 하위 컴포넌트들에게 전달할 propsdata
