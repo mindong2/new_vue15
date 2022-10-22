@@ -4,33 +4,31 @@
     <p>{{ form.name }}</p>
     <p>{{ form.age }}</p>
     <p>{{ form.email }}</p>
-    <br/>
-    <br/>
+    <br />
+    <br />
     <SlotView></SlotView>
-    <br/>
-    <br/>
+    <br />
+    <br />
     <InjectView></InjectView>
   </div>
 </template>
 
 <script>
-import InjectView from "./InjectView.vue"
-import SlotView from "../SlotView.vue"
+import InjectView from "./InjectView.vue";
+import SlotView from "../SlotView.vue";
 export default {
-    data() {
-        return {
-            str : 'propsdata'
-        }
-    },
-    components: {
-        InjectView,
-        SlotView
-    },  
-    // provide에서 받은 값
-    inject : ["form"]
-}
+  data() {
+    return {
+      str: "propsdata",
+    };
+  },
+  components: {
+    InjectView,
+    SlotView,
+  },
+  // provide에서 받은 값
+  inject: ["form"],
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
