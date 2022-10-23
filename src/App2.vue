@@ -71,7 +71,6 @@ export default {
   padding: 0;
 }
 #app {
-  background: #999;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
