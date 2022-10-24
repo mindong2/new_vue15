@@ -1,14 +1,16 @@
 <template>
   <div id="app">
     <h1>Main</h1>
+    <RootView></RootView>
   </div>
 </template>
 
 <script>
-
+import RootView from "@/views/RootView.vue"
 export default {
   name: "app",
   components: {
+    RootView,
   },
   data() {
     return {
