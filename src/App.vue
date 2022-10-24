@@ -1,61 +1,23 @@
 <template>
   <div id="app">
-    <h1 id="header">KAKAO SEARCH API </h1>
-
-    <div id="search">
-      <input type="text" v-model="query" @keyup.enter="callWebDoc"/>
-      <button @click="callWebDoc">검색</button>
-    </div>
-
-    <ul>
-      <li v-for=" (item, index) in list" :key="index" class="contents">
-        <p>
-          <a :href="item.url" target="_blank">
-            <span v-html="item.title"></span>
-          </a>
-          <!-- filters | 앞의 것을 파라미터로 받는다. -->
-          <span>{{ new Date(item.datetime) | toYmd }}</span>
-        </p>
-        <p v-html="item.contents"></p>
-      </li>
-    </ul>
+    <router-link to="/search">Search API</router-link>
+    <router-link to="/before">before_login API</router-link>
+    <br />
+    <br />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { callKakaoApi } from "@/plugins/axios"
-export default {
-  name: "app",
-  components: {
-  },
-  data() {
-    return {
-      query : '',
-      list : []
+  export default {
+    // Kakao 객체를 사용하기 위해 선언되지 않으면 정의하도록 설정
+    created() {
+    if(!window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.VUE_APP_KAKAO_JAVA_SCRIPT_KEY);
+      window.Kakao.isInitialized();
     }
-  },
-  methods : {
-    async callWebDoc() {
-      const response = await callKakaoApi("/v2/search/web", {
-        method: "GET",
-        params: {
-          query: this.query,
-        },
-      });
-      this.list = response.data.documents;
-    }
-    
-  },
-  // 텍스트의 형식화.
-  filters: {
-    toYmd(obj) {
-      const year = obj.getFullYear();
-      const months = String(obj.getMonth()).padStart(2, 0);
-      const date = String(obj.getDate()).padStart(2, 0);
-      return `${year}-${months}-${date}`;
-    },
-  },
-};
+  }
+} 
 </script>
 
 <style scoped>
@@ -67,16 +29,13 @@ export default {
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
+a {
   font-weight: bold;
   color: #2c3e50;
+  padding: 0 15px;
 }
 
-nav a.router-link-exact-active {
+a.router-link-exact-active {
   color: #42b983;
 }
 
