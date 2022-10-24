@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- add axios soon -->
     <watchComponent />
     vuex
     <input type="text" v-model="searchKeyword" />
