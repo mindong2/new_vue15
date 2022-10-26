@@ -1,4 +1,4 @@
-# vue_project / Mixins
+# vue_project / KAKAO_API
 
 ## Project setup
 ```
