@@ -1,11 +1,21 @@
 <template>
   <div id="app">
+    <!-- <ModuleTest></ModuleTest> -->
+    <PanelView></PanelView>
+    <ControllerView></ControllerView>
   </div>
 </template>
 
 <script>
+  // import ModuleTest from '@/views/ModuleTest.vue'
+  import PanelView from '@/views/PanelView.vue'
+  import ControllerView from '@/views/ControllerView.vue'
   export default {
-
+    components : {
+      // ModuleTest,
+      PanelView,
+      ControllerView
+    }
 } 
 </script>
 
