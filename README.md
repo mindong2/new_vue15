@@ -1,4 +1,4 @@
-# vue_project / Vuex
+# vue / Vuetify
 
 ## Project setup
 ```
