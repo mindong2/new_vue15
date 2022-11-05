@@ -1,41 +1,26 @@
 <template>
-  <div id="app">
-    <ControllerView></ControllerView>
-    <MonitorView></MonitorView>
-  </div>
+  <LayoutView v-if="isLogin"></LayoutView>
+  <LoginView v-else></LoginView>
 </template>
 
 <script>
-import ControllerView from "@/components/ControllerView.vue";
-import MonitorView from "@/components/MonitorView.vue";
+import LayoutView from "@/views/LayoutView";
+import LoginView from "@/views/LoginView";
 export default {
-  name: "app",
+  name: "App",
+  data() {
+    return {
+      isLogin: true,
+      items: [
+        { title: "Home", icon: "home", to: "/" },
+        { title: "About", icon: "info", to: "/about" },
+      ],
+      right: null,
+    };
+  },
   components: {
-    ControllerView,
-    MonitorView,
+    LayoutView,
+    LoginView,
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>

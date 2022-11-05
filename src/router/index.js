@@ -1,19 +1,25 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import MixinView from "@/components/MixinView.vue";
-import MixinView2 from "@/components/MixinView2.vue";
+import HomeView from "@/views/HomeView";
+import AboutView from "@/views/AboutView";
+import LoginView from "@/views/LoginView";
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/mixin",
-    name: "mixin",
-    component: MixinView,
+    path: "/",
+    name: "home",
+    component: HomeView,
   },
   {
-    path: "/mixin2",
-    name: "mixin2",
-    component: MixinView2,
+    path: "/about",
+    name: "about",
+    component: AboutView,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: LoginView,
   },
 ];
 
