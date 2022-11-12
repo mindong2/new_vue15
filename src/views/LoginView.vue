@@ -8,6 +8,7 @@
 
 <script>
 import { callApi } from "@/plugins/axios";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -16,9 +17,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions("user", ["setToken", "setName", "setId"]),
+
     async login() {
       const response = await callApi({
-        url: "https://api.devcury.kr/auth/user",
+        url: "/auth/user",
         method: "post",
         data: {
           id: this.id,
@@ -26,11 +29,15 @@ export default {
         },
       });
 
-      console.log(response);
-      //   token sessionStorage, vuex에 저장
-      const token = response.data.token;
-      console.log(token);
-      //   sessionStorage
+      this.setToken(response.data.token);
+
+      const userInfo = await callApi({
+        url: "/api/auth/user",
+        method: "GET",
+      });
+
+      this.setId(userInfo.data.id);
+      this.setName(userInfo.data.name);
     },
   },
 };

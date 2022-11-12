@@ -6,6 +6,7 @@
 <script>
 import LayoutView from "@/views/LayoutView";
 import LoginView from "@/views/LoginView";
+import { mapGetters } from "vuex";
 export default {
   name: "App",
   data() {
@@ -21,6 +22,9 @@ export default {
   components: {
     LayoutView,
     LoginView,
+  },
+  computed: {
+    ...mapGetters("user", ["hasToken"]),
   },
 };
 </script>
