@@ -1,38 +1,77 @@
 import { callApi } from "@/plugins/axios";
 
 export const getBoards = () => {
-  callApi({
-    url: "/api/board",
+  return callApi("/api/board", {
     method: "GET",
   });
 };
 
 export const postBoard = (data) => {
-  callApi({
-    url: "/api/board",
+  return callApi(`/api/board`, {
     method: "POST",
     data,
   });
 };
 
+export const patchBoard = (data) => {
+  return callApi(`/api/board`, {
+    method: "PATCH",
+    data,
+  });
+};
+
 export const getBoard = (bno) => {
-  callApi({
-    url: `/api/board/${bno}`,
+  return callApi(`/api/board/${bno}`, {
     method: "GET",
   });
 };
 
+export const getBoardComment = (bno) => {
+  return callApi(`/api/board/comment/${bno}`, {
+    method: "GET",
+  });
+};
+
+export const postBoardComment = (bno) => {
+  return callApi(`/api/board/comment/${bno}`, {
+    method: "POST",
+  });
+};
+
+export const getComments = (bno) => {
+  return callApi(`/api/board/comment/${bno}`, {
+    method: "GET",
+  });
+};
+
+export const postComment = (bno, data) => {
+  return callApi(`/api/board/comment/${bno}`, {
+    method: "POST",
+    data,
+  });
+};
+
 export const deleteBoard = (bno) => {
-  callApi({
-    url: `/api/board/${bno}`,
+  return callApi(`/api/board/${bno}`, {
     method: "DELETE",
   });
 };
 
-export const updateBoard = (data) => {
-  callApi({
-    url: `/api/board/${data}`,
-    method: "PATCH",
+export const deleteComment = (commentId) => {
+  return callApi(`/api/board/comment/${commentId}`, {
+    method: "DELETE",
+  });
+};
+
+export const getEmotion = (bno) => {
+  return callApi(`/api/board/emotion/${bno}`, {
+    method: "GET",
+  });
+};
+
+export const postEmotion = (bno, data) => {
+  return callApi(`/api/board/emotion/${bno}`, {
+    method: "POST",
     data,
   });
 };

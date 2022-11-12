@@ -26,7 +26,7 @@
     </v-navigation-drawer>
 
     <v-app-bar app>
-      <v-btn @click="logOut"></v-btn>
+      <v-btn @click="logOut">로그아웃</v-btn>
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->

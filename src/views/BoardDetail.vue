@@ -1,75 +1,236 @@
 <template>
-  <div>
-    상세보기 {{ bno }}
+  <div class="board-detail">
     <v-card>
-      <p>{{ title }}</p>
-      <v-divider></v-divider>
-    </v-card>
+      <v-card-text class="pb-0">
+        <div>
+          <p class="text-h4 text--primary">
+            {{ board.title }}
+          </p>
+          <p>{{ dateToYmdHms(new Date(board.createdAt)) }}</p>
+        </div>
+        <p class="content">
+          {{ board.contents }}
+        </p>
+        <div>
+          <v-col>
+            <v-textarea
+              filled
+              label="댓글을 입력하세요."
+              rows="3"
+              v-model="comment"
+            ></v-textarea>
+          </v-col>
+          <v-row style="display: flex; width: 98%; margin: 0 auto">
+            <v-icon
+              v-show="emotion === 0"
+              class="icon"
+              @click="clickEmotion(null)"
+            >
+              thumb_up_alt
+            </v-icon>
+            <v-icon
+              v-show="emotion !== 0"
+              class="icon"
+              @click="clickEmotion(0)"
+            >
+              thumb_up_off_alt
+            </v-icon>
+            <v-icon
+              v-show="emotion === 1"
+              class="icon"
+              @click="clickEmotion(null)"
+            >
+              thumb_down_alt
+            </v-icon>
+            <v-icon
+              v-show="emotion !== 1"
+              class="icon"
+              @click="clickEmotion(1)"
+            >
+              thumb_down_off_alt
+            </v-icon>
 
-    <v-card>
-      <Viewer ref="viewer" height="500px"></Viewer>
-    </v-card>
-
-    <v-card>
-      <!-- 작성자와 내 id가 같을때만 나타난다. -->
-      <template v-if="writer === id">
-        <v-btn @click="$router.push(`/board/form/${bno}`)">수정</v-btn>
-        <!-- vuex의 나의 id와 이 리스트의 id 비교해서 삭제가능하게 추가 -->
-        <v-btn @click="callBoardDelete">삭제</v-btn>
-      </template>
-      <v-btn @click="$router.push({ name: 'board' })">목록으로</v-btn>
+            <v-btn
+              class="btn"
+              @click="$router.push({ name: 'board' })"
+              style="margin-left: auto"
+              >목록으로</v-btn
+            >
+            <v-btn class="btn" @click="callPostComment"> 댓글 등록 </v-btn>
+          </v-row>
+        </div>
+        <p>
+          <v-list v-if="comments.length != 0">
+            <v-subheader>Comment List</v-subheader>
+          </v-list>
+          <v-list>
+            <template v-for="(comment, index) in comments">
+              <template>
+                <v-divider :key="index" :inset="false"></v-divider>
+                <v-list-item :key="comment.id">
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      {{ comment.writer }}
+                    </v-list-item-title>
+                    <v-list-item-subtitle
+                      style="display: flex; position: relative"
+                    >
+                      <span>{{ comment.comment }}</span>
+                      <span style="margin-left: auto">
+                        {{ dateToYmdHms(new Date(comment.createdAt)) }}
+                      </span>
+                      <v-icon
+                        small
+                        @click="callDeleteComment(comment.id)"
+                        style="margin-left: 10px; top: -3px"
+                        v-if="comment.writer === userId"
+                      >
+                        mdi-delete
+                      </v-icon>
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </template>
+            </template>
+          </v-list>
+        </p>
+      </v-card-text>
     </v-card>
   </div>
 </template>
 
 <script>
-import { getBoard, deleteBoard } from "@/services/board";
+import {
+  deleteComment,
+  getBoard,
+  getComments,
+  getEmotion,
+  postComment,
+  postEmotion,
+} from "@/services/board";
+import date from "@/mixins/date";
 import { mapGetters } from "vuex";
-// 하단은 toast라이브러리 뷰어
-import { Viewer } from "@toast-ui/vue-editor";
-import "@toast-ui/editor/dist/toastui-editor.css";
 export default {
+  mixins: [date],
   data() {
     return {
-      title: "",
-      writer: "",
+      board: {
+        createdAt: "",
+        updatedAt: "",
+        bno: 0,
+        title: "",
+        contents: "",
+        writer: "",
+        commentCnt: 0,
+        likeCnt: 0,
+        hateCnt: 0,
+      },
+      comment: "",
+      comments: [],
+      emotion: null,
     };
   },
-  components: {
-    Viewer,
+  methods: {
+    async callGetBoard() {
+      try {
+        const board = await getBoard(this.bno);
+        this.board = board.data;
+      } catch (error) {
+        alert("통신실패");
+        console.error(error);
+      }
+    },
+    async callGetComments() {
+      try {
+        const response = await getComments(this.bno);
+        this.comments = response.data;
+      } catch (error) {
+        alert("통신실패");
+        console.error(error);
+      }
+    },
+    async callPostComment() {
+      try {
+        if (!this.comment) {
+          alert("댓글을 입력해주세요.");
+          return false;
+        }
+        const response = await postComment(this.bno, { comment: this.comment });
+        if (response.status === 200) {
+          this.comment = "";
+          this.callGetComments();
+          alert("등록되었습니다.");
+        } else {
+          alert("통신실패");
+        }
+      } catch (error) {
+        alert("통신실패");
+        console.error(error);
+      }
+    },
+    async callDeleteComment(id) {
+      try {
+        if (!confirm("정말 삭제하시겠습니까?")) {
+          return;
+        }
+        const response = await deleteComment(id);
+        if (response.status === 200) {
+          this.callGetComments();
+          alert("삭제 되었습니다.");
+        }
+      } catch (error) {
+        alert("통신실패");
+        console.error(error);
+      }
+    },
+    async callGetEmotion() {
+      try {
+        const response = await getEmotion(this.bno);
+        this.emotion = response.data.emotion;
+      } catch (error) {
+        alert("통신실패");
+        console.error(error);
+      }
+    },
+    async callPostEmotion(emotion) {
+      try {
+        await postEmotion(this.bno, { emotion });
+      } catch (error) {
+        alert("통신실패");
+        console.error(error);
+      }
+    },
+    clickEmotion(emotion) {
+      this.emotion = emotion;
+      this.callPostEmotion(emotion);
+    },
   },
   computed: {
-    ...mapGetters("user", ["id"]),
+    ...mapGetters("user", { userId: "id" }),
     bno() {
       return this.$route.params.id;
     },
   },
-  methods: {
-    async callBoard() {
-      const response = await getBoard(this.bno);
-      console.log(response);
-      this.title = response.data.title;
-      this.writer = response.data.writer;
-      this.setContent(response.data.contents);
-    },
-    // toast 라이브러리
-    setContent(content) {
-      this.$refs.viewer.invoke("setMarkdown", content);
-    },
-
-    async callBoardDelete() {
-      if (confirm("정말로 삭제하시겠습니까?")) {
-        //참일시 삭제
-        const response = await deleteBoard(this.bno);
-        console.log(response);
-        this.$router.push({ name: "board" });
-      }
-    },
-  },
   created() {
-    this.callBoard();
+    this.callGetBoard();
+    this.callGetComments();
+    this.callGetEmotion();
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.board-detail {
+  width: 95%;
+  margin: 20px auto 0px;
+}
+.icon {
+  margin: 0 5px;
+}
+.btn {
+  margin: 0 5px;
+}
+.content {
+  white-space: pre-line;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <LayoutView v-if="isLogin"></LayoutView>
+  <LayoutView v-if="hasToken"></LayoutView>
   <LoginView v-else></LoginView>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   name: "App",
   data() {
     return {
-      isLogin: true,
+      isLogin: false,
       items: [
         { title: "Home", icon: "home", to: "/" },
         { title: "About", icon: "info", to: "/about" },
