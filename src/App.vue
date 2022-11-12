@@ -2,6 +2,7 @@
   <div id="app">
     <watchComponent />
     vuex
+    <!-- master_bak -->
     <input type="text" v-model="searchKeyword" />
     <br />
     <ul>
