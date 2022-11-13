@@ -4,7 +4,7 @@
     <v-row style="display: flex">
       <v-btn
         style="margin-left: auto"
-        @click="$router.push({ name: 'boardPost' })"
+        @click="$router.push({ name: 'boardForm' })"
       >
         게시물 등록
       </v-btn>
@@ -31,7 +31,7 @@
           <template v-if="userId === item.writer">
             <v-icon
               small
-              @click="$router.push(`/board/post/${item.bno}`)"
+              @click="$router.push(`/board/form/${item.bno}`)"
               class="mr-2"
             >
               mdi-pencil
