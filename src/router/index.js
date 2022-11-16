@@ -6,6 +6,7 @@ import LoginView from "@/views/LoginView";
 import BoardView from "@/views/BoardView";
 import BoardFormView from "@/views/BoardFormView";
 import BoardDetail from "@/views/BoardDetail";
+import CustomView from "@/views/CustomView";
 Vue.use(VueRouter);
 
 const routes = [
@@ -43,6 +44,11 @@ const routes = [
     path: "/board/form:id",
     name: "boardForm",
     component: BoardFormView,
+  },
+  {
+    path: "/custom/",
+    name: "custom",
+    component: CustomView,
   },
 ];
 

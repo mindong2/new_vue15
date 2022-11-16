@@ -52,7 +52,8 @@ export default {
       items: [
         { title: "Home", icon: "home", to: "/" },
         { title: "About", icon: "info", to: "/about" },
-        { title: "Board", icon: "info", to: "/board" },
+        { title: "Board", icon: "dashboard", to: "/board" },
+        { title: "Custom", icon: "stars", to: "/custom" },
       ],
       right: null,
     };

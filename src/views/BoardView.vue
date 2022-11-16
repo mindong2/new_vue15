@@ -17,14 +17,7 @@
           {{ toWriteTime(new Date(item.createdAt)) }}
         </template>
 
-        <template #[`item.title`]="{ item }">
-          <span
-            class="custom-title"
-            @click="$router.push(`/board/${item.bno}`)"
-          >
-            {{ item.title }}
-          </span>
-        </template>
+         
 
         <!-- 테이블 동작 -->
         <template #[`item.actions`]="{ item }">
