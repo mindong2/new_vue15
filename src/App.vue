@@ -1,6 +1,8 @@
 <template>
+
   <LayoutView v-if="hasToken"></LayoutView>
   <LoginView v-else></LoginView>
+
 </template>
 
 <script>
