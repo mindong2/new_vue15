@@ -1,20 +1,19 @@
 import { callApi } from "@/plugins/axios";
 
-export const getAllCustom = () => {
-    return callApi(`/api/custom/keys`, {
-      method: "GET",
-    });
-  };
+export const callPostCustom = (key, data) => {
+  return callApi(`/api/custom/${key}`, {
+    method: "POST",
+    data,
+  });
+};
 
-export const getCustom = (key) => {
+export const callGetCustom = (key) => {
   return callApi(`/api/custom/${key}`, {
     method: "GET",
   });
 };
-
-export const postCustom = (key, data) => {
-  return callApi(`/api/custom/${key}`, {
-    method: "POST",
-    data,
+export const getAllCustom = () => {
+  return callApi(`/api/custom/keys`, {
+    method: "GET",
   });
 };

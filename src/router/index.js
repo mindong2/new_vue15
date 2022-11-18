@@ -1,4 +1,3 @@
-
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "@/views/HomeView";
@@ -8,6 +7,7 @@ import BoardView from "@/views/BoardView";
 import BoardFormView from "@/views/BoardFormView";
 import BoardDetail from "@/views/BoardDetail";
 import CustomView from "@/views/CustomView";
+import CustomDetail from "@/views/CustomDetail";
 Vue.use(VueRouter);
 
 const routes = [
@@ -42,7 +42,7 @@ const routes = [
     component: BoardFormView,
   },
   {
-    path: "/board/form:id",
+    path: "/board/form/:id",
     name: "boardForm",
     component: BoardFormView,
   },
@@ -50,6 +50,11 @@ const routes = [
     path: "/custom/",
     name: "custom",
     component: CustomView,
+  },
+  {
+    path: "/custom/:id",
+    name: "customDetail",
+    component: CustomDetail,
   },
 ];
 
