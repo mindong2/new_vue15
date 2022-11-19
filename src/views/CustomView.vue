@@ -2,7 +2,7 @@
   <div id="custom">
     <section
       class="isLoading"
-      v-if="!isLoading"
+      v-show="!isLoading"
       style="
         display: flex;
         justify-content: center;
@@ -19,7 +19,7 @@
         color="green"
       ></v-progress-linear>
     </section>
-    <section class="custom" v-else>
+    <section class="custom">
       <div class="custom_cont">
         <ul>
           <li v-for="item in movieData" :key="item.id">
