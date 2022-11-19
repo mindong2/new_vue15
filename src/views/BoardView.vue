@@ -1,83 +1,119 @@
+<!-- eslint-disable vue/valid-v-slot -->
 <template>
-  <div id="app">
-    <!-- <ul>
-      <li @click="goToDetail(pageNum)" v-for="pageNum in pageNums" :key="pageNum">{{ pageNum }}번째 게시물입니다.</li>
-      <li @click="goToDetail(1, 'page1')">1번째 게시물입니다.</li>
-      <li @click="goToDetail(2, 'page2')">2번째 게시물입니다.</li>
-      <li @click="goToDetail(3, 'page3')">3번째 게시물입니다.</li>
-      <li @click="goToDetail(4, 'page4')">4번째 게시물입니다.</li>
-      <li @click="goToDetail(5, 'page5')">5번째 게시물입니다.</li>
-    </ul> -->
-
-    <ul>
-      <li
-        v-for="item in boardList"
-        :key="item.key"
-        @click="goToDetail(item.key, item.title)"
+  <div class="board">
+    <v-row style="display: flex">
+      <v-btn
+        style="margin-left: auto"
+        @click="$router.push({ name: 'boardForm' })"
       >
-        {{ item.title }}
-      </li>
-    </ul>
-    <!-- <p>
-      <button @click="goToHome">goToHome</button>
-    </p> -->
+        게시물 등록
+      </v-btn>
+    </v-row>
+
+    <v-row>
+      <v-data-table :headers="headers" :items="boards" style="width: 100%">
+        <!-- 작성시간 -->
+        <template #[`item.createdAt`]="{ item }">
+          {{ toWriteTime(new Date(item.createdAt)) }}
+        </template>
+
+        <template #[`item.title`]="{ item }">
+          <span
+            class="custom-title"
+            @click="$router.push(`/board/${item.bno}`)"
+          >
+            {{ item.title }}
+          </span>
+        </template>
+
+        <!-- 테이블 동작 -->
+        <template #[`item.actions`]="{ item }">
+          <template v-if="userId === item.writer">
+            <v-icon
+              small
+              @click="$router.push(`/board/form/${item.bno}`)"
+              class="mr-2"
+            >
+              mdi-pencil
+            </v-icon>
+            <v-icon small @click="callDelete(item)"> mdi-delete </v-icon>
+          </template>
+        </template>
+
+        <!-- 데이터 없을때 화면 -->
+        <template #no-data>
+          <v-btn color="primary" @click="initialize"> 새로고침 </v-btn>
+        </template>
+      </v-data-table>
+    </v-row>
   </div>
 </template>
 
 <script>
+import { deleteBoard, getBoards } from "@/services/board";
+import date from "@/mixins/date";
+import { mapGetters } from "vuex";
 export default {
-  name: "BoardView",
+  mixins: [date],
   data() {
     return {
-      boardList: [
-        { key: 1, title: "안녕하세요" },
-        { key: 2, title: "방가워요" },
-        { key: 3, title: "ㅎㅎ" },
+      dialogDelete: false,
+      boards: [],
+      headers: [
+        {
+          text: "게시물 번호",
+          align: "start",
+          sortable: true,
+          value: "bno",
+        },
+        { text: "제목", value: "title" },
+        { text: "추천수", value: "likeCnt" },
+        { text: "비추천수", value: "hateCnt" },
+        { text: "작성자", value: "writer" },
+        { text: "등록일", value: "createdAt" },
+        { text: "", value: "actions", sortable: false },
       ],
     };
   },
+  computed: {
+    ...mapGetters("user", { userId: "id" }),
+  },
   methods: {
-    goToDetail(key, title) {
-      this.$router.push({
-        path: `/detail/${key}`,
-        query: {
-          title,
-        },
-      });
+    initialize() {
+      this.callGetBoards();
+    },
+    async callGetBoards() {
+      try {
+        const response = await getBoards();
+        this.boards = response.data;
+      } catch (error) {
+        alert("통신실패");
+        console.error(error);
+      }
+    },
+    // 삭제여부 모달 창 on
+    async callDelete(item) {
+      if (confirm("삭제 하시겠습니까?")) {
+        const response = await deleteBoard(item.bno);
+        if (response.status === 200) {
+          alert("삭제 되었습니다.");
+          this.callGetBoards();
+        }
+      }
     },
   },
-  //   methods: {
-  //     goToDetail(PAGE_NUM, MESSAGE) {
-  //       this.$router.push({
-  //         path: `/detail/${PAGE_NUM}`,
-  //         // 아래는 url로 파라미터를 전송시키는것
-  //         query: {
-  //           MESSAGE,
-  //         },
-  //       });
-  //     },
-  //     addList() {
-  //       this.pageNums.push(this.pageNums.length + 1);
-  //     },
-  //     goToHome() {
-  //       this.$router.push("/");
-  //     },
-  //   },
+  created() {
+    this.initialize();
+  },
 };
 </script>
 
-<style>
-ul {
-  width: 600px;
-  margin: 0 auto;
-  padding-left: 0;
-  border-top: 1px solid #000;
-  margin-bottom: 20px;
+<style scoped>
+.board {
+  margin: 20px auto 0px;
+  width: 95%;
 }
-ul li {
-  list-style: none;
-  padding: 15px 0;
-  border-bottom: 1px solid #000;
+.custom-title {
   cursor: pointer;
 }
 </style>

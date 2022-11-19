@@ -1,4 +1,4 @@
-# vue_project / Vuex / Mixins / Router / Axios
+# vue_project / Mixins
 
 ## Project setup
 ```

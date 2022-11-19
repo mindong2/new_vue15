@@ -1,23 +1,43 @@
 <template>
-  <div class="home">
-    <h1>Home</h1>
-    <button @click="goToAbout">goToAbout</button>
+  <div>
+    <v-row class="content" justify="center">
+      <v-expansion-panels accordion>
+        <v-expansion-panel v-for="item in listData" :key="item.id">
+          <v-expansion-panel-header>{{ item.title }}</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            {{ item.contents }}
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-row>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
   name: "HomeView",
-  methods: {
-    goToAbout() {
-      // 이런식으로 라우터에 직접 접근하여 이동할수도 있다.
-      // 예를들어 로그인 전에 노출시켜야 할 페이지라면 아래와같이 사용가능
-      this.$router.push("/about");
-      // 위 아래는 같다. -> name을 unique하게 지어야 하는 이유 만약 path를 바꾸면 일일히 바꾸기 어려우니 name으로 작성해놓으면 path를 바꿔도 무관
-      // this.$router.push({name : "about"});
-    },
+  data() {
+    return {
+      listData: [
+        {
+          id: "1",
+          title: "About Me",
+          contents:
+            "저는 현재 웹퍼블리셔로 일하면서 전반적인 웹 스타일링과 Code Igniter로 기본적인 ERP 개발을 하고 있습니다. nuxt도 공부하며 ts도 도입할 예정입니다.",
+        },
+        { id: "2", title: "Home", contents: "프로젝트 해야하는데..." },
+        { id: "3", title: "Momjobgo", contents: "맘잡고 파이팅" },
+        { id: "4", title: "Vue.js", contents: "에반유 그는 도덕책" },
+      ],
+    };
   },
 };
 </script>
+
+<style scoped>
+.content {
+  width: 80%;
+  margin: 0 auto;
+  word-break: keep-all;
+}
+</style>

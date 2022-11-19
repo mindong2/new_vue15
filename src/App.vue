@@ -1,105 +1,32 @@
 <template>
-  <div id="app">
-    <watchComponent />
-    vuex
-    <input type="text" v-model="searchKeyword" />
-    <br />
-    <ul>
-      <li v-for="item in filterList" :key="item.value">
-        {{ item.label }}
-      </li>
-    </ul>
 
-    <br />
-    <br />
-    <br />
-    <!-- <ProvideView></ProvideView> -->
+  <LayoutView v-if="hasToken"></LayoutView>
+  <LoginView v-else></LoginView>
 
-    --------------- router-view -------------
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/where">WhereView</router-link> |
-      <router-link to="/board">BoardView</router-link> |
-      <router-link to="/parent">ParentView</router-link> |
-      <router-link to="/provide">ProvideView</router-link>
-    </nav>
-    <!-- router-view가 해당 컴포넌트에 해당하는 영역 -->
-    <router-view />
-  </div>
 </template>
 
 <script>
-// import ProvideView from "./views/props,provide,inject/ProvideView.vue";
-import watchComponent from "./views/event/watchComponent.vue";
-
+import LayoutView from "@/views/LayoutView";
+import LoginView from "@/views/LoginView";
+import { mapGetters } from "vuex";
 export default {
-  name: "app",
-  components: {
-    // ProvideView,
-    watchComponent,
-  },
+  name: "App",
   data() {
     return {
-      str: "parent's propsdata",
-      provideStr: "provide String",
-      provideObj: {
-        name: "",
-        age: null,
-        email: "",
-      },
-      fruits: [
-        { value: "apple", label: "사과" },
-        { value: "orange", label: "오렌지" },
-        { value: "banana", label: "바나나" },
-        { value: "grape", label: "포도" },
+      isLogin: false,
+      items: [
+        { title: "Home", icon: "home", to: "/" },
+        { title: "About", icon: "info", to: "/about" },
       ],
-      searchKeyword: "",
+      right: null,
     };
   },
-  methods: {
-    changeForm(name, value) {
-      this.provideObj[name] = value;
-      // this.provideObj.name = value;와 같다
-    },
-  },
-  // 하위 컴포넌트들에게 전달할 propsdata
-  provide() {
-    return {
-      form: this.provideObj,
-      changeForm: this.changeForm,
-    };
+  components: {
+    LayoutView,
+    LoginView,
   },
   computed: {
-    // 검색어 나오게하는 함수. this.fruits나 this.searchKeyword 둘중 하나가 바뀌면 자동실행
-    filterList() {
-      return this.fruits.filter((fruit) =>
-        fruit.label.includes(this.searchKeyword)
-      );
-    },
+    ...mapGetters("user", ["hasToken"]),
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
